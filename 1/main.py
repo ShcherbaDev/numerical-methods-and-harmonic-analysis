@@ -113,6 +113,50 @@ for number_of_nodes in range(min_number_of_nodes, max_number_of_nodes + 1, numbe
         "delta_n": delta_n,
         "delta_g": delta_g
     })
+    
+    # ============
+    #  Завдання 7
+    # ============
+
+    extrapolation_left_x = get_interpolation_range_nodes(2 * range_start - range_end, range_start, 1000)
+    extrapolation_right_x = get_interpolation_range_nodes(range_end, 2 * range_end - range_start, 1000)
+
+    extrapolation_left_y = [f(x) for x in extrapolation_left_x]
+    extrapolation_right_y = [f(x) for x in extrapolation_right_x]
+
+    extrapolation_left_lagrange = [get_lagrange(x, nodes) for x in extrapolation_left_x]
+    extrapolation_right_lagrange = [get_lagrange(x, nodes) for x in extrapolation_right_x]
+
+    # Графік функції f(x) та поліному L(x) на [2a-b, 2b-a]
+    extrapolation_x = extrapolation_left_x + extrapolation_right_x
+    extrapolation_y = extrapolation_left_y + extrapolation_right_y
+    extrapolation_lagrange = extrapolation_left_lagrange + extrapolation_right_lagrange
+    
+    if is_first_iteration:
+        plt.figure(figsize=(12, 6))
+        plt.plot(extrapolation_x, extrapolation_y, label="$f(x)$")
+        plt.plot(extrapolation_x, extrapolation_lagrange, label="$L(x)$", linestyle="--")
+        plt.title(f"Екстраполяція $f(x)$ та $L(x)$ на відрізку $[2a-b, 2b-a]$")
+        plt.xlabel("x")
+        plt.ylabel("y")
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+
+    # Графік похибок екстраполяції
+    extrapolation_errors = [f_x - l_x for f_x, l_x in zip(extrapolation_y, extrapolation_lagrange)]
+    extrapolation_delta = max(abs(err) for err in extrapolation_errors)
+
+    if is_first_iteration:
+        plt.figure(figsize=(12, 6))
+        plt.plot(extrapolation_x, extrapolation_errors, label=f"Похибка $f(x) - L(x)$\n$\Delta = {extrapolation_delta}$")
+        plt.axhline(0, color="black", linestyle=":", linewidth=3)
+        plt.title(f"Похибки екстраполяції $f(x) - L(x)$ на $[2a-b, 2b-a]$")
+        plt.xlabel("x")
+        plt.ylabel("Похибка")
+        plt.legend()
+        plt.grid(True)
+        plt.show()
 
 # ============
 #  Завдання 6
