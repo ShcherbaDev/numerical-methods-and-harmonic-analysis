@@ -1,7 +1,7 @@
 from arrange import arrange
 
 
-def runge_kutta_2_order(f, x_0, y_0, x_n, h):
+def runge_kutta_2_order(f, x_0, y_0, x_n, h) -> tuple[list[int], list[int]]:
     x_values = arrange(x_0, x_n, h)
     y_values = [0] * len(x_values)
     y_values[0] = y_0
@@ -15,4 +15,4 @@ def runge_kutta_2_order(f, x_0, y_0, x_n, h):
 
         y_values[i] = y + (k_1 + k_2) / 2
 
-    return zip(x_values, y_values)
+    return x_values, y_values
