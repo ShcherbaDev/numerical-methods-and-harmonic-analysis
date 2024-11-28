@@ -1,3 +1,4 @@
+import math
 import sympy as sp
 from runge_kutta import *
 
@@ -26,3 +27,27 @@ print(f"Частинний аналітичний розв'язок: y = {partia
 
 is_solution = sp.simplify(differential_expression_left - differential_expression_right) == 0
 print(f"Загальний розв'язок задовільняє диференціальне рівняння: {'Так' if is_solution else 'Ні'}")
+
+# ============
+#  Завдання 3
+# ============
+
+h = 0.1
+
+def analytical_function(x, C):
+    return C*math.exp(x**2) - x**2 - 1
+
+def differential_function(x, y):
+    return 2*x*y + 2*x**3
+
+# Розрахунок аналітичного розв'язку
+x_values = arrange(x_0, x_n, h)
+analytical_solution_values = [analytical_function(x, C_value) for x in x_values]
+
+# Розрахунок наближеного розв'язку за Рунге-Кутти 2-го розряду
+_, numerical_values = runge_kutta_2_order(differential_function, x_0, y_0, x_n, h)
+
+print("| x | Аналітичний розв'язок | Наближений розв'язок |")
+print("|---|-----------------------|----------------------|")
+for x, y_analytical, y_numerical in zip(x_values, analytical_solution_values, numerical_values):
+    print(f"| {x} | {round(y_analytical, 4)} | {round(y_numerical, 4)} |")
