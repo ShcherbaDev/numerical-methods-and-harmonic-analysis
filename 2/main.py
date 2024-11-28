@@ -1,5 +1,5 @@
 import math
-import time
+import matplotlib.pyplot as plt
 import sympy as sp
 from runge_kutta import *
 
@@ -59,15 +59,28 @@ print("")
 #  Завдання 4
 # ============
 
+# Потрібно для 5-го завдання
+def theoretical_error_runge_kutta_2_order(h):
+    return h ** 2
+
 analytical_function_value_at_xn = analytical_function(x_n, C_value)
 step_sizes = [0.1, 0.05, 0.025, 0.01]
 results = []
 
+actual_errors = []
+theoretical_errors = []
+
 for h in step_sizes:
     _, numerical_function_values = runge_kutta_2_order(differential_function, x_0, y_0, x_n, h)
     numerical_function_value_at_xn = numerical_function_values[-1]
-    error = abs(analytical_function_value_at_xn - numerical_function_value_at_xn)
-    results.append((h, numerical_function_value_at_xn, error))
+    
+    actual_error = abs(analytical_function_value_at_xn - numerical_function_value_at_xn)
+    actual_errors.append(actual_error)
+    
+    theoretical_error = theoretical_error_runge_kutta_2_order(h)
+    theoretical_errors.append(theoretical_error)
+    
+    results.append((h, numerical_function_value_at_xn, actual_error))
 
 print("| h | Наближений розв'язок у x_n | Похибка |")
 print("|---|----------------------------|---------|")
@@ -75,4 +88,18 @@ for h, y_numerical, error in results:
     print(f"| {h} | {round(y_numerical, 8)} | {round(error, 8)} |")
 
 print("Висновок: при зменшенні кроку зменшується й похибка")
-print("При h=0.01 похибка взагалі мінімальна, що може вказувати на високу точність даного рівняння")
+print("При h=0.01 похибка дуже мала, що може вказувати на високу точність даного диференціального рівняння")
+
+# ============
+#  Завдання 5
+# ============
+
+plt.figure(figsize=(12, 6))
+plt.plot(step_sizes, actual_errors, label="Фактична похибка", marker="o")
+plt.plot(step_sizes, theoretical_errors, label="Теоретична похибка", marker="o")
+plt.title("Фактична і теоретична похибки Рунге-Кутти 2-го порядку")
+plt.xlabel("Крок h")
+plt.xlabel("Похибка")
+plt.legend()
+plt.grid(True)
+plt.show()
