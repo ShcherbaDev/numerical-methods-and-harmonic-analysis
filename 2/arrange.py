@@ -1,7 +1,7 @@
 def arrange(start, end, step):
     result = [start]
 
-    while result[-1] + step <= end:
-        result.append(round(result[-1] + step, 1))
+    while round(result[-1] + step, 10) <= end:
+        result.append(round(result[-1] + step, 10))
 
     return result
