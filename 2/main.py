@@ -46,8 +46,8 @@ x_values = arrange(x_0, x_n, h)
 analytical_solution_values = [analytical_function(x, C_value) for x in x_values]
 
 # Розрахунок наближеного розв'язку за Рунге-Кутти 2-го і 4-го розрядів
-_, numerical_function_values_2_order = runge_kutta_2_order(differential_function, x_0, y_0, x_n, h)
-_, numerical_function_values_4_order = runge_kutta_4_order(differential_function, x_0, y_0, x_n, h)
+numerical_function_values_2_order = runge_kutta_2_order(differential_function, x_0, y_0, x_n, h)
+numerical_function_values_4_order = runge_kutta_4_order(differential_function, x_0, y_0, x_n, h)
 
 print(f"\nТаблиця для h={h}:")
 print("| x | Аналітичний розв'язок | Наближений розв'язок Рунге-Кутти 2-го порядку | Наближений розв'язок Рунге-Кутти 4-го порядку |")
@@ -77,7 +77,7 @@ runge_kutta_4_actual_errors = []
 runge_kutta_4_theoretical_errors = []
 
 for h in step_sizes:
-    _, runge_kutta_2_numerical_function_values = runge_kutta_2_order(differential_function, x_0, y_0, x_n, h)
+    runge_kutta_2_numerical_function_values = runge_kutta_2_order(differential_function, x_0, y_0, x_n, h)
     numerical_function_value_at_xn = runge_kutta_2_numerical_function_values[-1]
     
     runge_kutta_2_actual_error = abs(analytical_function_value_at_xn - numerical_function_value_at_xn)
@@ -89,7 +89,7 @@ for h in step_sizes:
     runge_kutta_2_results.append((h, numerical_function_value_at_xn, runge_kutta_2_actual_error))
     
     
-    _, runge_kutta_4_numerical_function_values = runge_kutta_4_order(differential_function, x_0, y_0, x_n, h)
+    runge_kutta_4_numerical_function_values = runge_kutta_4_order(differential_function, x_0, y_0, x_n, h)
     numerical_function_value_at_xn = runge_kutta_4_numerical_function_values[-1]
     
     runge_kutta_4_actual_error = abs(analytical_function_value_at_xn - numerical_function_value_at_xn)
