@@ -51,7 +51,7 @@ numerical_function_values_4_order = runge_kutta_4_order(differential_function, x
 
 print(f"\nТаблиця для h={h}:")
 print("| x | Аналітичний розв'язок | Наближений розв'язок Рунге-Кутти 2-го порядку | Наближений розв'язок Рунге-Кутти 4-го порядку |")
-print("|---|-----------------------|----------------------|")
+print("|---|-----------------------|-----------------------------------------------|-----------------------------------------------|")
 for x, y_analytical, y_numerical_2_order, y_numerical_4_order in zip(x_values, analytical_solution_values, numerical_function_values_2_order, numerical_function_values_4_order):
     print(f"| {x} | {round(y_analytical, 8)} | {round(y_numerical_2_order, 8)} | {round(y_numerical_4_order, 8)} |")
 print("")
@@ -106,7 +106,7 @@ for h, y_numerical, error in runge_kutta_2_results:
     print(f"| {h} | {round(y_numerical, 8)} | {round(error, 8)} |")
 
 print("Висновок: при зменшенні кроку зменшується й похибка")
-print("При h=0.01 похибка дуже мала, що може вказувати на високу точність даного диференціального рівняння\n")
+print("При h=0.01 похибка дуже мала\n")
 
 print("| h | Наближений розв'язок у x_n для Рунге-Кутти 4-го порядку | Похибка |")
 print("|---|---------------------------------------------------------|---------|")
