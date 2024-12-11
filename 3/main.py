@@ -87,7 +87,7 @@ frequencies_dft_shifted = np.fft.fftshift(frequencies_dft)
 amplitude_spectrum_dft_shifted = np.fft.fftshift(amplitude_spectrum_dft)
 
 plt.figure(figsize=(12, 6))
-plt.plot(frequencies_dft_shifted, amplitude_spectrum_dft_shifted, label="Амплітудний спектр дискретного сигналу (DTFT)")
+plt.plot(frequencies_dft_shifted, amplitude_spectrum_dft_shifted, label="Амплітудний спектр дискретного сигналу (DFT)")
 plt.xlabel("Частота (Гц)")
 plt.ylabel("Амплітуда")
 plt.title("Амплітудний спектр дискретного сигналу")
