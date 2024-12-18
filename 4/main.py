@@ -20,12 +20,32 @@ def analyze_wavelet(signal, wavelet_name, humanfriendly_wavelet_name):
     # DWT
     cA, cD = pywt.dwt(signal, wavelet_name)
 
+    # Графіки для DWT
+    _, [original_signal_plot, cA_plot, cD_plot] = plt.subplots(3, 1, figsize=(12, 6))
+    original_signal_plot.plot(time, signal)
+    original_signal_plot.set_title("Оригінальний сигнал")
+    original_signal_plot.set_xlabel("Час")
+    original_signal_plot.set_ylabel("Амплітуда")
+
+    cA_plot.plot(cA)
+    cA_plot.set_title(f"Апроксимація ({humanfriendly_wavelet_name})")
+    cA_plot.set_xlabel("Час")
+    cA_plot.set_ylabel("Амплітуда")
+
+    cD_plot.plot(cD)
+    cD_plot.set_title(f"Деталізація ({humanfriendly_wavelet_name})")
+    cD_plot.set_xlabel("Час")
+    cD_plot.set_ylabel("Амплітуда")
+
+    plt.tight_layout()
+    plt.show()
+
     # Зворотне DWT для різних коефіцієнтів
     coef_appr = pywt.idwt(cA, None, wavelet_name) # Тільки апроксимуючі
     coef_detail = pywt.idwt(None, cD, wavelet_name) # Тільки деталізуючі
     coef_both = pywt.idwt(cA, cD, wavelet_name) # Апроксимуючі та деталізуючі
 
-    # Графіки
+    # Графіки для зворотного DWT
     _, [original_signal_plot, reconstructed_signal_plot] = plt.subplots(2, 1, figsize=(12, 6))
     original_signal_plot.plot(time, signal)
     original_signal_plot.set_title("Оригінальний сигнал")
@@ -55,9 +75,9 @@ time = np.linspace(0, 0.05, 1000)
 sine_clean = np.sin(2. * np.pi * 440 * time)
 sine_noise = sine_clean + np.random.normal(0, 0.3, time.shape)
 
-# ============
+# ==============
 #  Завдання 7-8
-# ============
+# ==============
 
 coeffs_thresholded = [
     pywt.threshold(coef, 0.1, mode="soft")
